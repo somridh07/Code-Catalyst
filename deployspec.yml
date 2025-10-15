@@ -1,0 +1,9 @@
+version: 0.2
+phases:
+  deploy:
+    commands:
+      - echo "Deploying frontend to S3..."
+      - aws s3 sync frontend/build s3://YOUR_STATIC_SITE_BUCKET/ --delete
+      - echo "Updating Lambda functions..."
+      - aws lambda update-function-code --function-name ListingLambda --zip-file fileb://lambdas/listing-lambda.zip
+      - aws lambda update-function-code --function-name BackendLambda --zip-file fileb://lambdas/backend-lambda.zip
