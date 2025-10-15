@@ -1,0 +1,17 @@
+name: AI-WebApp-Pipeline
+on:
+  push:
+    branches:
+      - main
+actions:
+  build:
+    identifier: BuildStage
+    uses: aws/build@v1
+    inputs:
+      buildspec: buildspec.yml
+  deploy:
+    needs: [build]
+    identifier: DeployStage
+    uses: aws/deploy@v1
+    inputs:
+      deployspec: deployspec.yml
