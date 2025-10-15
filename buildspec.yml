@@ -1,17 +1,15 @@
 version: 0.2
-
 phases:
   install:
     commands:
-      - echo "Installing phase skipped — static site"
+      - echo "Installing dependencies..."
   build:
     commands:
       - echo "Building static website"
       - mkdir -p dist
-      - cp -r src/* dist/
-
+      - cp -r * dist/
 artifacts:
+  base-directory: dist
   files:
     - '**/*'
-  base-directory: dist
 
