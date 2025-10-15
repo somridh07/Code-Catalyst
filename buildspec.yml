@@ -1,16 +1,17 @@
 version: 0.2
+
 phases:
   install:
-    runtime-versions:
-      nodejs: 18
+    commands:
+      - echo "Installing phase skipped — static site"
   build:
     commands:
-      - echo "Building frontend..."
-      - cd frontend && npm install && npm run build
-      - echo "Packaging Lambda functions..."
-      - cd ../lambdas/listing-lambda && zip -r listing-lambda.zip .
-      - cd ../backend-lambda && zip -r backend-lambda.zip .
+      - echo "Building static website"
+      - mkdir -p dist
+      - cp -r src/* dist/
+
 artifacts:
   files:
-    - frontend/build/**/*
-    - lambdas/**/*.zip
+    - '**/*'
+  base-directory: dist
+
