@@ -1,0 +1,16 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+  build:
+    commands:
+      - echo "Building frontend..."
+      - cd frontend && npm install && npm run build
+      - echo "Packaging Lambda functions..."
+      - cd ../lambdas/listing-lambda && zip -r listing-lambda.zip .
+      - cd ../backend-lambda && zip -r backend-lambda.zip .
+artifacts:
+  files:
+    - frontend/build/**/*
+    - lambdas/**/*.zip
