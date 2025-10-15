@@ -8,7 +8,7 @@ phases:
     commands:
       - echo "Building static website"
       - mkdir -p dist
-      - cp -r src/* dist/
+      - cp -r frontend/src/* dist/
   post_build:
     commands:
       - echo "Build completed successfully."
