@@ -4,16 +4,21 @@ phases:
   install:
     commands:
       - echo "Installing dependencies..."
+      # (Optional) Add npm install or other setup commands if needed
+
   build:
     commands:
-      - echo "Building static website"
+      - echo "Building static website..."
       - mkdir -p dist
-      - cp -r frontend/src/* index.html dist/
-  post_build:
-    commands:
-      - echo "Build completed successfully."
+      # Copy all source files from frontend/src/
+      - cp -r frontend/src/* dist/ || echo "No src folder found"
+      # Copy main static files from frontend root
+      - cp frontend/index.html dist/ || echo "No index.html found"
+      - cp frontend/app.js dist/ || echo "No app.js found"
+      - cp frontend/main.css dist/ || echo "No main.css found"
+      - echo "Build completed successfully!"
 
 artifacts:
-  base-directory: dist
   files:
     - '**/*'
+  base-directory: dist
