@@ -18,6 +18,16 @@ phases:
       - cp frontend/main.css dist/ || echo "No main.css found"
       - echo "Build completed successfully!"
 
+  post_build:
+    commands:
+      - echo "Triggering Lambda..."
+      - aws lambda invoke \
+          --function-name your-lambda-function-name \
+          --invocation-type Event \
+          --payload '{"buildStatus": "SUCCESS"}' \
+          response.json
+      - echo "Lambda function invoked successfully."
+
 artifacts:
   files:
     - '**/*'
