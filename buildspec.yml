@@ -22,7 +22,7 @@ phases:
     commands:
       - echo "Triggering Lambda..."
       - aws lambda invoke \
-          --function-name your-lambda-function-name \
+          --function-name listing-lambda \
           --invocation-type Event \
           --payload '{"buildStatus": "SUCCESS"}' \
           response.json
