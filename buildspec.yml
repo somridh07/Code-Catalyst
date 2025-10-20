@@ -35,7 +35,7 @@ artifacts:
 
   secondary-artifacts:
     LambdaCode:
-      base-directory: lambda_package
+      base-directory: lambdas
       files:
         - index.py
 
