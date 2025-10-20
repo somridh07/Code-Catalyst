@@ -33,4 +33,9 @@ artifacts:
     - '**/*'
   base-directory: dist
 
+  secondary-artifacts:
+    LambdaCode:
+      base-directory: lambda_package
+      files:
+        - index.py
 
