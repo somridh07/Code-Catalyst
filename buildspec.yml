@@ -4,7 +4,7 @@ phases:
   install:
     commands:
       - echo "Installing dependencies..."
-      # Add dependency commands if needed
+      # (Optional) Install npm/yarn packages if your frontend has dependencies
 
   build:
     commands:
