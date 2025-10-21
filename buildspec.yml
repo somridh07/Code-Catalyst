@@ -19,10 +19,10 @@ phases:
   post_build:
     commands:
       - echo "Invoking listing Lambda..."
-      - aws lambda invoke \
-          --function-name listing-lambda \
-          --region ap-south-1 \
-          --payload '{}' \
+      - aws lambda invoke 
+          --function-name listing-lambda 
+          --region ap-south-1 
+          --payload '{}' 
           output.json
       - echo "Lambda invoked. Check output.json for response."
 
