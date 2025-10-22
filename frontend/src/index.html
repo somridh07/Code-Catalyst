@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Static Site</title>
-  <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Verification</title>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-  <h1>Hello from CodeCatalyst!, Myself Somridh Rudra</h1>
-  <script src="app.js"></script>
+    <div class="container">
+        <h2>Please provide image for verification and recognition</h2>
+        <form id="imageForm">
+            <input type="file" id="imageInput" accept="image/*" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="previewContainer">
+            <img id="preview" src="" alt="Image Preview" style="display:none;">
+        </div>
+    </div>
+    <script src="app.js"></script>
 </body>
 </html>
