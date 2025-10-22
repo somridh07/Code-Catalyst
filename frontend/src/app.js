@@ -21,7 +21,7 @@ imageInput.addEventListener('change', () => {
 // Function to send data to API Gateway
 async function sendData(filename, content) {
     const data = { filename: filename, content: content };
-    const response = await fetch('https://t1oshk7xhi.execute-api.ap-south-1.amazonaws.com/Dev', {
+    const response = await fetch('https://t1oshk7xhi.execute-api.ap-south-1.amazonaws.com/Dev/upload', {
         method: 'POST',
         headers: { 'Content-Type': file.type },
         body: base64Data
