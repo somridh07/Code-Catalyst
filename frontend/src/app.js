@@ -21,10 +21,10 @@ imageInput.addEventListener('change', () => {
 // Function to send data to API Gateway
 async function sendData(filename, content) {
     const data = { filename: filename, content: content };
-    const response = await fetch('https://t1oshk7xhi.execute-api.ap-south-1.amazonaws.com/Dev/upload', {
+    const response = await fetch('https://t1oshk7xhi.execute-api.ap-south-1.amazonaws.com/Dev', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Content-Type': file.type },
+        body: base64Data
     });
     const result = await response.json();
     console.log(result);
