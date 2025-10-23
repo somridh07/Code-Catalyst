@@ -4,19 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Verification</title>
+
+    <!-- ✅ Include your stylesheet -->
     <link rel="stylesheet" href="main.css">
+
+    <!-- ✅ Optional: Font & Icons CDN for better look -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- For optional use -->
 </head>
+
 <body>
     <div class="container">
         <h2>Please provide image for verification and recognition</h2>
+
+        <!-- Image upload form -->
         <form id="imageForm">
             <input type="file" id="imageInput" accept="image/*" required>
             <button type="submit">Submit</button>
         </form>
+
+        <!-- Image preview -->
         <div id="previewContainer">
             <img id="preview" src="" alt="Image Preview" style="display:none;">
         </div>
+
+        <!-- 🧠 AI Response Section (from CloudFront or Lambda) -->
+        <div id="responseContainer" class="response-section">
+            <h3>AI Recognition Response</h3>
+            <div id="responseBox">
+                <p style="color: #777;">Once the image is processed, AI results will appear here.</p>
+            </div>
+        </div>
     </div>
+
+    <!-- ✅ JavaScript logic -->
     <script src="app.js"></script>
 </body>
 </html>
+
