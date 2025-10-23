@@ -3,6 +3,7 @@
 const imageInput = document.getElementById('imageInput');
 const preview = document.getElementById('preview');
 const imageForm = document.getElementById('imageForm');
+const responseBox = document.getElementById('responseBox'); // For showing CloudFront response
 
 // 1️⃣ Preview selected image
 imageInput.addEventListener('change', () => {
@@ -20,7 +21,7 @@ imageInput.addEventListener('change', () => {
     }
 });
 
-// 2️⃣ Function to send data to API Gateway
+// 2️⃣ Function to send data to API Gateway (uploads to S3 via Lambda)
 async function sendData(filename, base64Content) {
     const data = { filename: filename, content: base64Content };
 
@@ -28,9 +29,9 @@ async function sendData(filename, base64Content) {
         const response = await fetch('https://t1oshk7xhi.execute-api.ap-south-1.amazonaws.com/Dev/upload', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json', // Must be JSON
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data), // Send JSON
+            body: JSON.stringify(data),
         });
 
         if (!response.ok) {
@@ -38,15 +39,49 @@ async function sendData(filename, base64Content) {
         }
 
         const result = await response.json();
-        console.log(result);
-        alert(result.message || 'Image uploaded successfully!');
+        console.log('Lambda/API Response:', result);
+
+        alert(result.message || 'Image uploaded successfully! ✅');
+
+        // 3️⃣ Fetch processed info from CloudFront
+        // (Assuming CloudFront serves AI/metadata results from S3)
+        if (result.filename) {
+            await fetchCloudfrontData(result.filename);
+        } else {
+            responseBox.innerText = 'Image uploaded, but no metadata available yet.';
+        }
+
     } catch (err) {
         console.error('Error uploading image:', err);
         alert('Failed to upload image. Check console for details.');
     }
 }
 
-// 3️⃣ Handle form submission
+// 4️⃣ Fetch processed AI metadata or recognition info from CloudFront
+async function fetchCloudfrontData(filename) {
+    try {
+        // Example: CloudFront serves files from your S3 bucket (AI results)
+        // Replace with your actual CloudFront URL:
+        const cloudfrontURL = `https://d123456abcdef.cloudfront.net/processed/${filename}.json`;
+
+        const res = await fetch(cloudfrontURL);
+        if (!res.ok) throw new Error('Failed to fetch CloudFront data');
+
+        const data = await res.json();
+        console.log('CloudFront Response:', data);
+
+        // Display metadata nicely
+        responseBox.innerHTML = `
+            <h3>AI Recognition Result:</h3>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+        `;
+    } catch (err) {
+        console.error('Error fetching CloudFront data:', err);
+        responseBox.innerHTML = `<p style="color:red;">Failed to load AI response. Try again later.</p>`;
+    }
+}
+
+// 5️⃣ Handle form submission
 imageForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -55,9 +90,8 @@ imageForm.addEventListener('submit', (e) => {
 
     const reader = new FileReader();
     reader.onload = function (event) {
-        const base64Data = event.target.result.split(',')[1]; // Remove data:image/...;base64,
+        const base64Data = event.target.result.split(',')[1];
         sendData(file.name, base64Data);
     };
     reader.readAsDataURL(file);
 });
-
